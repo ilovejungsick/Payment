@@ -2,6 +2,8 @@ import './globals.css';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import { OrderLookupButton } from '@/components/order-lookup-button';
+import { Footer } from '@/components/footer';
+import { KakaoChatButton } from '@/components/kakao-chat-button';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -17,7 +19,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ko">
-      <body className={inter.className}>
+      <body className={`${inter.className} min-h-screen flex flex-col`}>
         {/* 프로모션 배너 */}
         <div className="bg-black text-white text-center py-2 text-sm">
           <span className="inline-flex items-center gap-2">
@@ -43,7 +45,16 @@ export default function RootLayout({
           </div>
         </nav>
 
-        {children}
+        {/* 메인 콘텐츠 */}
+        <main className="flex-1">
+          {children}
+        </main>
+
+        {/* 푸터 추가 */}
+        <Footer />
+        
+        {/* 카카오톡 채팅 버튼 */}
+        <KakaoChatButton />
       </body>
     </html>
   );

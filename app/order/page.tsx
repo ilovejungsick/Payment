@@ -21,6 +21,7 @@ const formSchema = z.object({
   cashReceiptValue: z.string().optional(),
   termsAccepted: z.boolean().refine((val) => val, "You must accept the terms"),
   purchaseAgreement: z.boolean().refine((val) => val, "You must agree to the purchase conditions"),
+  depositorName: z.string().optional(),
 });
 
 export default function OrderPage() {
@@ -54,14 +55,18 @@ export default function OrderPage() {
         <div className="md:col-span-2">
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+              {/* 주문자 정보 */}
               <Card className="p-6 border-primary/10">
-                <div className="space-y-6">
+                <h2 className="font-semibold text-lg mb-4">주문자 정보</h2>
+                <div className="space-y-4">
                   <FormField
                     control={form.control}
                     name="name"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel className="text-gray-700">이름</FormLabel>
+                        <FormLabel className="text-gray-700">
+                          이름 <span className="text-red-500">*</span>
+                        </FormLabel>
                         <FormControl>
                           <Input {...field} className="focus-visible:ring-primary" />
                         </FormControl>
@@ -75,9 +80,15 @@ export default function OrderPage() {
                     name="phone"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel className="text-gray-700">연락처</FormLabel>
+                        <FormLabel className="text-gray-700">
+                          연락처 <span className="text-red-500">*</span>
+                        </FormLabel>
                         <FormControl>
-                          <Input {...field} className="focus-visible:ring-primary" placeholder="01012345678" />
+                          <Input 
+                            {...field} 
+                            placeholder="'-' 없이 입력해주세요"
+                            className="focus-visible:ring-primary" 
+                          />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -89,16 +100,54 @@ export default function OrderPage() {
                     name="email"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel className="text-gray-700">이메일</FormLabel>
+                        <FormLabel className="text-gray-700">
+                          이메일 <span className="text-red-500">*</span>
+                        </FormLabel>
                         <FormControl>
-                          <Input {...field} type="email" className="focus-visible:ring-primary" />
+                          <Input 
+                            {...field} 
+                            type="email" 
+                            className="focus-visible:ring-primary"
+                            placeholder="앱 초대장을 받으실 이메일을 입력해주세요" 
+                          />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
                     )}
                   />
+
+                  <FormField
+                    control={form.control}
+                    name="depositorName"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="text-gray-700">
+                          입금자명 <span className="text-gray-500 text-sm">(선택)</span>
+                        </FormLabel>
+                        <FormControl>
+                          <Input 
+                            {...field} 
+                            className="focus-visible:ring-primary"
+                            placeholder="미입력 시 주문자 이름으로 처리됩니다" 
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  <div className="text-sm text-gray-500 pt-2">
+                    <span className="text-red-500">*</span> 표시는 필수 입력 사항입니다
+                  </div>
                 </div>
               </Card>
+
+              {/* 무통장입금 안내 */}
+              <div className="bg-blue-50/50 p-4 rounded-lg border border-blue-100">
+                <p className="text-sm text-blue-700">
+                  <span className="font-medium">✨ 안정적인 서비스 제공을 위해 얼리버드는 무통장입금으로만 진행됩니다</span>
+                </p>
+              </div>
 
               <Card className="p-6 border-primary/10">
                 <FormField
