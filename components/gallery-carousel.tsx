@@ -36,21 +36,21 @@ export function GalleryCarousel() {
       <CarouselContent>
         {images.map((image, index) => (
           <CarouselItem key={index}>
-            <div className="relative aspect-[16/9] w-full">
+            <div className="relative aspect-[4/3] sm:aspect-[16/9] w-full">
               <Image
                 src={image.src}
                 alt={image.alt}
                 fill
-                className="object-contain"
+                className="object-contain px-0"
                 priority={index === 0}
-                sizes="(max-width: 1280px) 100vw, 1280px"
+                sizes="100vw"
               />
             </div>
           </CarouselItem>
         ))}
       </CarouselContent>
-      <CarouselPrevious className="left-4 bg-white/80 hover:bg-white" />
-      <CarouselNext className="right-4 bg-white/80 hover:bg-white" />
+      <CarouselPrevious className="left-2 sm:left-4 bg-white/80 hover:bg-white" />
+      <CarouselNext className="right-2 sm:right-4 bg-white/80 hover:bg-white" />
     </Carousel>
   );
 } 
